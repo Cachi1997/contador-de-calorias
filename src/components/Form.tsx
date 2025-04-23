@@ -7,12 +7,14 @@ type FormProps = {
   dispatch: React.Dispatch<ActivityActions>;
 };
 
+const initialState = {
+  category: 1,
+  name: "",
+  calories: 0,
+};
+
 const Form = ({ dispatch }: FormProps) => {
-  const [activity, setActivity] = useState<Activity>({
-    category: 1,
-    name: "",
-    calories: 0,
-  });
+  const [activity, setActivity] = useState<Activity>(initialState);
 
   const handleChange = (
     e:
@@ -29,7 +31,7 @@ const Form = ({ dispatch }: FormProps) => {
 
   const isValidActivity = () => {
     const { name, calories } = activity;
-    console.log(name.trim() !== " " && calories > 0);
+    //console.log(name.trim() !== " " && calories > 0);
 
     return name.trim() !== "" && calories > 0;
   };
@@ -37,6 +39,7 @@ const Form = ({ dispatch }: FormProps) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch({ type: "save-activity", payload: { newActivity: activity } });
+    setActivity(initialState);
   };
 
   return (
